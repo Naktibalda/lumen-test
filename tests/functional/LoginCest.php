@@ -29,6 +29,16 @@ class LoginCest
         ]);
     }
 
+    public function returnsErrorIfParametersAreNotSet(FunctionalTester $I)
+    {
+        $I->sendPost('/login', []);
+
+        $I->canSeeResponseCodeIs(HttpCode::UNAUTHORIZED);
+        $I->seeResponseContainsJson([
+            'error' => 'incorrect username or password'
+        ]);
+    }
+
     public function returnsTokenIfLoginSucceeded(FunctionalTester $I)
     {
         $I->sendPost('/login', [
@@ -44,5 +54,53 @@ class LoginCest
         $token = $I->grabDataFromResponseByJsonPath('token')[0];
 
         $I->seeRecord('token', ['token' => $token]);
+    }
+
+    public function issuesNewTokenIfOldTokenIsPassedIn(FunctionalTester $I)
+    {
+        $I->sendPost('/login', [
+            'username' => 'valid',
+            'password' => 'valid',
+        ]);
+
+        $I->canSeeResponseCodeIs(HttpCode::OK);
+        $I->seeResponseMatchesJsonType([
+            'token' => 'string:!empty',
+        ]);
+
+        $token = $I->grabDataFromResponseByJsonPath('token')[0];
+
+        $I->seeRecord('token', ['token' => $token]);
+
+        //renew token
+        //$I->haveHttpHeader('token', $token);
+        $I->sendPost('/login', []);
+
+        $I->canSeeResponseCodeIs(HttpCode::OK);
+        $I->seeResponseMatchesJsonType([
+            'token' => 'string:!empty',
+        ]);
+
+        $newToken = $I->grabDataFromResponseByJsonPath('token')[0];
+
+        $I->seeRecord('token', ['token' => $newToken]);
+        $I->dontSeeRecord('token', ['token' => $token]);
+    }
+
+    public function minimalExample(FunctionalTester $I)
+    {
+        $I->sendPost('/login', [
+            'username' => 'valid',
+            'password' => 'valid',
+        ]);
+
+        $I->canSeeResponseCodeIs(HttpCode::OK);
+        $I->seeAuthentication();
+
+        //this request should fail
+        $I->sendPost('/login', []);
+
+        $I->canSeeResponseCodeIs(HttpCode::UNAUTHORIZED);
+        $I->dontSeeAuthentication();
     }
 }
