@@ -1,0 +1,16 @@
+<VirtualHost *:*>
+  ServerName standup.dev-web.eckoh.com
+
+  DocumentRoot /srv/share/sites/standup.1-0-0.eckoh.com/public
+  ServerAdmin gintautas.miselis@eckoh.com
+  DirectoryIndex index.html
+
+  
+  php_value       session.cookie_lifetime  "1440"
+  php_admin_flag  session.cookie_secure    on
+  php_admin_flag  suhosin.cookie.encrypt   on
+  php_admin_value suhosin.session.cryptkey "bythepowersofgreyskull"
+
+  CustomLog /var/log/apache/standup.1-0-0.eckoh.com.access.log common
+  ErrorLog  /var/log/apache/standup.1-0-0.eckoh.com.error.log
+</VirtualHost>
