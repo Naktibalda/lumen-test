@@ -14,3 +14,7 @@
 $app->get('/', function () use ($app) {
     return $app->version();
 });
+
+$app->post('/login', function () use ($app) {
+    return response()->json(['error' => 'incorrect username or password'], 401);
+});
