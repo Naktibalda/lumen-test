@@ -11,15 +11,12 @@ class AuthController extends Controller
 
     public function __construct()
     {
-        //
+        $this->middleware('auth');
     }
 
     public function login(Request $request)
     {
         $user = $request->user();
-        if ($user === null) {
-            return response()->json(['error' => 'incorrect username or password'], 401);
-        }
 
         $token = Uuid::uuid4();
 
