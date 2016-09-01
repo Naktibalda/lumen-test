@@ -1,5 +1,6 @@
 <?php
 
+use Codeception\Util\HttpCode;
 
 class LoginCest
 {
@@ -12,6 +13,9 @@ class LoginCest
     }
 
     // tests
+    /**
+     * @param FunctionalTester $I
+     */
     public function returnsErrorIfLoginFailed(FunctionalTester $I)
     {
         $I->sendPost('/login', [
@@ -19,9 +23,22 @@ class LoginCest
             'password' => 'invalid',
         ]);
 
-        $I->canSeeResponseCodeIs(Codeception\Util\HttpCode::UNAUTHORIZED);
+        $I->canSeeResponseCodeIs(HttpCode::UNAUTHORIZED);
         $I->seeResponseContainsJson([
             'error' => 'incorrect username or password'
+        ]);
+    }
+
+    public function returnsTokenIfLoginSucceeded(FunctionalTester $I)
+    {
+        $I->sendPost('/login', [
+            'username' => 'valid',
+            'password' => 'valid',
+        ]);
+
+        $I->canSeeResponseCodeIs(HttpCode::OK);
+        $I->seeResponseMatchesJsonType([
+            'token' => 'string:!empty',
         ]);
     }
 }
