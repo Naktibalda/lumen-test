@@ -4,8 +4,8 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#composer-lock-the-lock-file",
         "This file is @generated automatically"
     ],
-    "hash": "2cdce9c93434afc728b5ae91261f6b37",
-    "content-hash": "6273cad60c8769e5e677feccc3e8949b",
+    "hash": "f613956bd10cddc2e157e3dd03a62ebf",
+    "content-hash": "c69b5f6d006d64ae6f48501f9b7a5a61",
     "packages": [
         {
             "name": "components/jquery",
@@ -2551,6 +2551,44 @@
                 "webdriver"
             ],
             "time": "2016-08-10 00:44:08"
+        },
+        {
+            "name": "flow/jsonpath",
+            "version": "0.3.1",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/FlowCommunications/JSONPath.git",
+                "reference": "e064398010089f9efb46044f85ee63c458ae89e1"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/FlowCommunications/JSONPath/zipball/e064398010089f9efb46044f85ee63c458ae89e1",
+                "reference": "e064398010089f9efb46044f85ee63c458ae89e1",
+                "shasum": ""
+            },
+            "require-dev": {
+                "peekmo/jsonpath": "dev-master",
+                "phpunit/phpunit": "dev-master"
+            },
+            "type": "library",
+            "autoload": {
+                "psr-0": {
+                    "Flow\\JSONPath": "src/",
+                    "Flow\\JSONPath\\Test": "tests/"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Stephen Frank",
+                    "email": "stephen@flowsa.com"
+                }
+            ],
+            "description": "JSONPath implementation for parsing, searching and flattening arrays",
+            "time": "2015-10-12 07:39:47"
         },
         {
             "name": "fzaninotto/faker",

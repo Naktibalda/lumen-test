@@ -40,5 +40,9 @@ class LoginCest
         $I->seeResponseMatchesJsonType([
             'token' => 'string:!empty',
         ]);
+
+        $token = $I->grabDataFromResponseByJsonPath('token')[0];
+
+        $I->seeRecord('token', ['token' => $token]);
     }
 }
