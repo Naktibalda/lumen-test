@@ -7,8 +7,6 @@ CREATE TABLE `user` (
   PRIMARY KEY (`username`)
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
-INSERT INTO `user` (`username`, `name`, `created`, `last_login`) VALUES  ('valid', 'Test User', NOW(), NULL);
-
 CREATE TABLE `token` (
   `token` char(36) NOT NULL,
   `ip` int(10) unsigned NOT NULL,

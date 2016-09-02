@@ -6,6 +6,7 @@ class LoginCest
 {
     public function _before(FunctionalTester $I)
     {
+        $I->haveRecord('user', ['username' => 'valid', 'name' => 'Test User']);
     }
 
     public function _after(FunctionalTester $I)
