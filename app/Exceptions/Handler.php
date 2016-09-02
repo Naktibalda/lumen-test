@@ -3,11 +3,15 @@
 namespace App\Exceptions;
 
 use Exception;
+use Illuminate\Http\JsonResponse;
 use Illuminate\Validation\ValidationException;
 use Illuminate\Auth\Access\AuthorizationException;
 use Illuminate\Database\Eloquent\ModelNotFoundException;
+use Illuminate\Http\Exception\HttpResponseException;
+use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 use Symfony\Component\HttpKernel\Exception\HttpException;
 use Laravel\Lumen\Exceptions\Handler as ExceptionHandler;
+
 
 class Handler extends ExceptionHandler
 {
@@ -45,6 +49,34 @@ class Handler extends ExceptionHandler
      */
     public function render($request, Exception $e)
     {
-        return parent::render($request, $e);
+        if ($e instanceof HttpResponseException) {
+            return $e->getResponse();
+        } elseif ($e instanceof ModelNotFoundException) {
+            $e = new NotFoundHttpException($e->getMessage(), $e);
+        } elseif ($e instanceof AuthorizationException) {
+            $e = new HttpException(403, $e->getMessage());
+        } elseif ($e instanceof ValidationException && $e->getResponse()) {
+            return $e->getResponse();
+        }
+
+        if ($e instanceof HttpException) {
+            $statusCode = $e->getStatusCode();
+        } else {
+            $statusCode = $e->getCode();
+        }
+
+        if ($statusCode < 400 || $statusCode >= 600) {
+            $statusCode = 500;
+        }
+
+        $message = $e->getMessage();
+        if ($message === '') {
+            $classNameParts = explode('\\', get_class($e));
+            $message = end($classNameParts);
+        }
+
+        return new JsonResponse([
+            'error' => $message
+        ], $statusCode);
     }
 }
