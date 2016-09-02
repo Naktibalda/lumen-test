@@ -62,14 +62,5 @@ class AuthController extends Controller
 
         $user = User::getByUsername($username);
         return !empty($user);
-
-        /*
-        $ldap = new LdapClient('ldap.eckoh.com', 636, 3, true, true);
-        $result = $ldap->bind('OU=Eckoh,OU=User Accounts,DC=eckoh,DC=com,samaccountname='.$ldap->escape($username), $password);
-        //$result = $ldap->query('OU=Eckoh,OU=User Accounts,DC=eckoh,DC=com', 'samaccountname='. $username)->execute();
-
-        */
-
-
     }
 }
