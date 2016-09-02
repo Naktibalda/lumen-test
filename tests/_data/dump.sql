@@ -1,3 +1,14 @@
+CREATE TABLE `user` (
+  `username` VARCHAR(50) NOT NULL,
+  `name` VARCHAR(50) NOT NULL,
+  `created_at` DATETIME NOT NULL,
+  `updated_at` DATETIME NOT NULL,
+  `last_login` DATETIME NULL,
+  PRIMARY KEY (`username`)
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+INSERT INTO `user` (`username`, `name`, `created`, `last_login`) VALUES  ('valid', 'Test User', NOW(), NULL);
+
 CREATE TABLE `token` (
   `token` char(36) NOT NULL,
   `ip` int(10) unsigned NOT NULL,
@@ -12,15 +23,6 @@ CREATE TABLE `token` (
     ON DELETE NO ACTION
     ON UPDATE NO ACTION
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
-
-CREATE TABLE `user` (
-  `username` VARCHAR(50) NOT NULL,
-  `name` VARCHAR(50) NOT NULL,
-  `created` DATETIME NOT NULL,
-  `last_login` DATETIME NULL,
-  PRIMARY KEY (`username`));
-
-INSERT INTO `user` (`username`, `name`, `created`, `last_login`) VALUES  ('valid', 'Test User', NOW(), NULL);
 
 CREATE TABLE `report` (
   `id` INT UNSIGNED NOT NULL AUTO_INCREMENT,
@@ -38,4 +40,5 @@ CREATE TABLE `report` (
   FOREIGN KEY (`username`)
   REFERENCES `user` (`username`)
     ON DELETE NO ACTION
-    ON UPDATE NO ACTION);
+    ON UPDATE NO ACTION
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;;
