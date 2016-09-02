@@ -3,6 +3,7 @@
 namespace App;
 
 use Illuminate\Auth\Authenticatable;
+use Illuminate\Support\Facades\DB;
 use Laravel\Lumen\Auth\Authorizable;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Contracts\Auth\Authenticatable as AuthenticatableContract;
@@ -63,5 +64,20 @@ class Report extends Model implements
     public static function getLastReport($username)
     {
         return self::where('username', $username)->orderBy('date', 'desc')->take(1)->first();
+    }
+
+    public static function getReportForDate($date)
+    {
+        $query = "
+            SELECT
+              u.username,
+              u.name,
+              IFNULL(r.yesterday, '') AS yesterday,
+              IFNULL(r.today, '') AS today,
+              IFNULL(r.blockers, '') AS blockers
+            FROM user u
+            LEFT JOIN report r
+              ON u.username = r.username AND r.date = ?";
+        return DB::select($query, [$date]);
     }
 }

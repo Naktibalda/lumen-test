@@ -56,7 +56,7 @@ class ReportController extends Controller
 
     public function getAll(Request $request)
     {
-        $result = [];
+        $result = Report::getReportForDate(date('Y-m-d'));
 
         return new JsonResponse($result);
     }
