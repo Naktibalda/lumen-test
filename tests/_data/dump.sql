@@ -23,6 +23,7 @@ CREATE TABLE `user` (
 INSERT INTO `user` (`username`, `name`, `created`, `last_login`) VALUES  ('valid', 'Test User', NOW(), NULL);
 
 CREATE TABLE `report` (
+  `id` INT UNSIGNED NOT NULL AUTO_INCREMENT,
   `date` DATE NOT NULL,
   `username` VARCHAR(50) NOT NULL,
   `yesterday` VARCHAR(200) NOT NULL,
@@ -30,7 +31,8 @@ CREATE TABLE `report` (
   `blockers` VARCHAR(200) NOT NULL,
   `created_at` DATETIME NOT NULL,
   `updated_at` DATETIME NOT NULL,
-  PRIMARY KEY (`date`),
+  PRIMARY KEY (`id`),
+  UNIQUE INDEX `report_date_username_unique`(`date` ASC, `username` ASC)
   INDEX `report_username` (`username` ASC),
   CONSTRAINT `report_username`
   FOREIGN KEY (`username`)

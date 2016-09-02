@@ -27,19 +27,27 @@ class ReportController extends Controller
         $yesterday = $request->input('yesterday');
         $today = $request->input('today');
         $blockers = $request->input('blockers');
+        $date = date('Y-m-d');
+        $username = $user->username;
 
-        $row = [
-            'date' => date('Y-m-d'),
-            'username' => $user->username,
+
+        $attributes = [
+            'date' => $date,
+            'username' => $username,
             'yesterday' => $yesterday,
             'today' => $today,
             'blockers' => $blockers,
         ];
 
-        $report = new Report($row);
-        $report->save();
+        $report = Report::where('username', $username)->where('date', $date)->first();
+        if (!$report) {
+            $report = new Report($attributes);
+            $report->save();
+        } else {
+            $report->update($attributes);
+        }
 
-        return new JsonResponse($row);
+        return new JsonResponse($attributes);
     }
 
 }
