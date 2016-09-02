@@ -18,3 +18,4 @@ $app->get('/', function () use ($app) {
 $app->post('/login', 'AuthController@login');
 
 $app->post('/my-report', 'ReportController@create');
+$app->get('/my-report', 'ReportController@get');

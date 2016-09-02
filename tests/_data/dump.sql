@@ -32,8 +32,8 @@ CREATE TABLE `report` (
   `created_at` DATETIME NOT NULL,
   `updated_at` DATETIME NOT NULL,
   PRIMARY KEY (`id`),
-  UNIQUE INDEX `report_date_username_unique`(`date` ASC, `username` ASC)
-  INDEX `report_username` (`username` ASC),
+  UNIQUE INDEX `report_username_date_unique` (`username` ASC, `date` ASC),
+  INDEX `report_date` (`date` ASC),
   CONSTRAINT `report_username`
   FOREIGN KEY (`username`)
   REFERENCES `user` (`username`)

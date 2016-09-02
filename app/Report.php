@@ -32,4 +32,36 @@ class Report extends Model implements
      */
     protected $hidden = [
     ];
+
+    public static function getReportForToday($username)
+    {
+        $report = self::where('username', $username)->where('date', date('Y-m-d'))->first();
+        if ($report) {
+            return [
+                'yesterday' => $report->yesterday,
+                'today' => $report->today,
+                'blockers' => $report->blockers,
+            ];
+        }
+
+        $report = self::getLastReport($username);
+        if ($report) {
+            return [
+                'yesterday' => $report->today,
+                'today' => '',
+                'blockers' => '',
+            ];
+        }
+
+        return [
+            'yesterday' => '',
+            'today' => '',
+            'blockers' => '',
+        ];
+    }
+
+    public static function getLastReport($username)
+    {
+        return self::where('username', $username)->orderBy('date', 'desc')->take(1)->first();
+    }
 }

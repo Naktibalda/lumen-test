@@ -5,10 +5,6 @@ namespace App\Http\Controllers;
 use App\Report;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Auth;
-use Illuminate\Support\Facades\DB;
-use Illuminate\Support\Facades\Facade;
-use Ramsey\Uuid\Uuid;
 
 class ReportController extends Controller
 {
@@ -48,6 +44,15 @@ class ReportController extends Controller
         }
 
         return new JsonResponse($attributes);
+    }
+
+    public function get(Request $request)
+    {
+        $user = $request->user();
+
+        $result = Report::getReportForToday($user->username);
+
+        return new JsonResponse($result);
     }
 
 }
