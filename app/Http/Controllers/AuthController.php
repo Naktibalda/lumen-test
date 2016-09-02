@@ -5,6 +5,8 @@ namespace App\Http\Controllers;
 use App\Token;
 use Illuminate\Http\Request;
 use Ramsey\Uuid\Uuid;
+use Symfony\Component\Ldap\LdapClient;
+use App\User;
 
 class AuthController extends Controller
 {
@@ -25,6 +27,8 @@ class AuthController extends Controller
             return response()->json(['error' => 'incorrect username or password'], 401);
         }
 
+        $user = User::getByUsername($username);
+
         $row = [
             'token' => Uuid::uuid4(),
             'username' => $username,
@@ -33,7 +37,11 @@ class AuthController extends Controller
         $token = new Token($row);
         $token->save();
 
-        return response()->json(['token' => $row['token']]);
+        return response()->json([
+            'token' => $row['token'],
+            'username' => $username,
+            'name' => $user['name'],
+        ]);
     }
 
     public function logout(Request $request)
@@ -48,6 +56,20 @@ class AuthController extends Controller
      */
     private function isValidUser($username, $password)
     {
-        return defined('RUNNING_TESTS') && $username === 'valid';
+        if (defined('RUNNING_TESTS')) {
+            return $username === 'valid';
+        }
+
+        $user = User::getByUsername($username);
+        return !empty($user);
+
+        /*
+        $ldap = new LdapClient('ldap.eckoh.com', 636, 3, true, true);
+        $result = $ldap->bind('OU=Eckoh,OU=User Accounts,DC=eckoh,DC=com,samaccountname='.$ldap->escape($username), $password);
+        //$result = $ldap->query('OU=Eckoh,OU=User Accounts,DC=eckoh,DC=com', 'samaccountname='. $username)->execute();
+
+        */
+
+
     }
 }

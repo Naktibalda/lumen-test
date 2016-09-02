@@ -40,4 +40,12 @@ class User extends Model implements
             return new self((array)$result[0]);
         }
     }
+
+    public static function getByUsername($username)
+    {
+        $result = DB::select('SELECT u.username, u.name FROM user u WHERE username = ?', [$username]);
+        if (!empty($result)) {
+            return new self((array)$result[0]);
+        }
+    }
 }
