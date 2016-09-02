@@ -3,7 +3,8 @@ var user = null;
 var ajaxLogin = function () {
 
   var loginCallback = function(data, status, jqXhr) {
-    console.log(data);
+    user = data;
+    $('#loginModal').modal('hide');
   };
   var username = $('#inputUsername').val();
   var password = $('#inputPassword').val();
@@ -13,12 +14,39 @@ var ajaxLogin = function () {
 };
 
 var ajaxReport = function () {
- return false;
+  var reportCallback = function(data, status, jqXhr) {
+    $('#reportModal').modal('hide');
+    getReport();
+  };
+
+  var params = {
+    yesterday: $('#inputYesterday').val(),
+    today: $('#inputToday').val(),
+    blockers: $('#inputBlockers').val(),
+  };
+
+  if (user == null) {
+    $('#reportModal').modal('hide');
+    alert('Please login first');
+    $('#loginModal').modal('show');
+    return false;
+  }
+
+  $.ajax({
+    url: '/my-report',
+    type: 'post',
+    data: params,
+    headers: {
+      token: user.token
+    },
+    datatype: 'json',
+    success: reportCallback
+  });
+  return false;
 };
 
 var getReport = function() {
   var getReportCallback = function(data, status, jqXhr) {
-    console.log(data);
 
     var html = '';
 
@@ -36,7 +64,7 @@ var getReport = function() {
 $(window).on("load", function() {
   $('#button-signin').on('click', ajaxLogin);
 
-  $('#button-report').on('click', ajaxReport());
+  $('#button-report').on('click', ajaxReport);
 
   getReport();
 });
