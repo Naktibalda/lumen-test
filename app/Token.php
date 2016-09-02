@@ -8,13 +8,13 @@ use Illuminate\Database\Eloquent\Model;
 use Illuminate\Contracts\Auth\Authenticatable as AuthenticatableContract;
 use Illuminate\Contracts\Auth\Access\Authorizable as AuthorizableContract;
 
-class Report extends Model implements
+class Token extends Model implements
     AuthenticatableContract,
     AuthorizableContract
 {
     use Authenticatable, Authorizable;
 
-    protected $table = 'report';
+    protected $table = 'token';
 
     /**
      * The attributes that are mass assignable.
@@ -22,7 +22,7 @@ class Report extends Model implements
      * @var array
      */
     protected $fillable = [
-        'date', 'username', 'yesterday', 'today', 'blockers'
+        'token', 'ip', 'username',
     ];
 
     /**

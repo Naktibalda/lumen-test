@@ -2,7 +2,8 @@ CREATE TABLE `token` (
   `token` char(36) NOT NULL,
   `ip` int(10) unsigned NOT NULL,
   `username` varchar(50) NOT NULL,
-  `created` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+  `created_at` DATETIME NOT NULL,
+  `updated_at` DATETIME NOT NULL,
   PRIMARY KEY (`token`),
   INDEX `token_username` (`username` ASC),
   CONSTRAINT `token_username`

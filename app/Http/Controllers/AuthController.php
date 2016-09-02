@@ -2,10 +2,8 @@
 
 namespace App\Http\Controllers;
 
+use App\Token;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Auth;
-use Illuminate\Support\Facades\DB;
-use Illuminate\Support\Facades\Facade;
 use Ramsey\Uuid\Uuid;
 
 class AuthController extends Controller
@@ -27,13 +25,15 @@ class AuthController extends Controller
             return response()->json(['error' => 'incorrect username or password'], 401);
         }
 
-        $token = Uuid::uuid4();
+        $row = [
+            'token' => Uuid::uuid4(),
+            'username' => $username,
+            'ip' => $request->getClientIp(),
+        ];
+        $token = new Token($row);
+        $token->save();
 
-        DB::insert('insert into token (token, ip, username) values (?, ?, ?)', [
-            $token, $request->getClientIp(), $username
-        ]);
-
-        return response()->json(['token' => $token]);
+        return response()->json(['token' => $row['token']]);
     }
 
     public function logout(Request $request)
