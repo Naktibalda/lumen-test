@@ -17,7 +17,7 @@ CREATE TABLE `user` (
   `username` VARCHAR(50) NOT NULL,
   `name` VARCHAR(50) NOT NULL,
   `created` DATETIME NOT NULL,
-  `last_login` DATETIME NOT NULL,
+  `last_login` DATETIME NULL,
   PRIMARY KEY (`username`));
 
 INSERT INTO `user` (`username`, `name`, `created`, `last_login`) VALUES  ('valid', 'Test User', NOW(), NULL);
