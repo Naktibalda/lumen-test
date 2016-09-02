@@ -11,7 +11,6 @@ class ReportController extends Controller
 
     public function __construct()
     {
-        $this->middleware('auth');
     }
 
     public function create(Request $request)
@@ -51,6 +50,13 @@ class ReportController extends Controller
         $user = $request->user();
 
         $result = Report::getReportForToday($user->username);
+
+        return new JsonResponse($result);
+    }
+
+    public function getAll(Request $request)
+    {
+        $result = [];
 
         return new JsonResponse($result);
     }
