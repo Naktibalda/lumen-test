@@ -7,14 +7,7 @@ class CreateReportCest
 
     public function _before(FunctionalTester $I)
     {
-        $I->sendPost('/login', [
-            'username' => 'valid',
-            'password' => 'valid',
-        ]);
-
-        $I->canSeeResponseCodeIs(HttpCode::OK);
-        $token = $I->grabDataFromResponseByJsonPath('token')[0];
-        $I->haveHttpHeader('token', $token);
+        $I->getAndApplyToken();
     }
 
     public function _after(FunctionalTester $I)
