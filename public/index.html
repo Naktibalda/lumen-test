@@ -50,7 +50,7 @@
                             <input type="checkbox" id="rememberMe" /> Remember me
                         </label>
                     </div>
-                    <button type="submit" class="btn btn-primary">Sign in</button>
+                    <button type="submit" class="btn btn-primary" id="button-signin">Sign in</button>
                 </form>
             </div>
         </div><!-- /.modal-content -->
@@ -73,14 +73,14 @@
                     </div>
                     <div class="form-group">
                         <label for="inputToday">What are you going to do today?</label>
-                        <input type="text" class="form-control" id="inputToday" placeholder="Today" />
+                        <input type="text" class="form-control" id="inputToday" placeholder="" />
                     </div>
                     <div class="form-group">
                         <label for="inputBlockers">Any blockers?</label>
-                        <input type="text" class="form-control" id="inputBlockers" placeholder="Blockers" />
+                        <input type="text" class="form-control" id="inputBlockers" placeholder="" />
                     </div>
 
-                    <button type="submit" class="btn btn-primary">Submit</button>
+                    <button type="submit" class="btn btn-primary" id="button-report">Submit</button>
                 </form>
             </div>
         </div><!-- /.modal-content -->
@@ -99,7 +99,7 @@
         <h3 class="text-muted">Product Delivery Status</h3>
     </div>
 
-    <table class="table">
+    <table class="table" id="reportTable">
         <thead>
             <tr>
                 <th>Developer</th>
@@ -108,30 +108,8 @@
                 <th>Blockers</th>
             </tr>
         </thead>
-        <tr>
-            <td>Andy Bacon</td>
-            <td>TFL 1</td>
-            <td>TFL 2</td>
-            <td>N/A</td>
-        </tr>
-        <tr>
-            <td>Dean Thompson</td>
-            <td>Affinity</td>
-            <td>Affinity</td>
-            <td>N/A</td>
-        </tr>
-        <tr>
-            <td>Gintautas Miselis</td>
-            <td>-</td>
-            <td>-</td>
-            <td>-</td>
-        </tr>
-        <tr>
-            <td>Owain, Llewellyn</td>
-            <td>Jira</td>
-            <td>Jenkins</td>
-            <td>Simon Perry</td>
-        </tr>
+        <tbody>
+        </tbody>
         <tfoot>
             <tr>
                 <td colspan="4" class="text-right">
@@ -151,8 +129,10 @@
 </div>
 
 <!-- jQuery (necessary for Bootstrap's JavaScript plugins) -->
-<script src="jquery/jquery.min.js"></script>
+<script src="jquery/jquery.js"></script>
 <!-- Include all compiled plugins (below), or include individual files as needed -->
 <script src="bootstrap/js/bootstrap.min.js"></script>
+
+<script src="js/main.js"></script>
 </body>
 </html>
