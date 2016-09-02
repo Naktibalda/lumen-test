@@ -5,6 +5,7 @@ namespace App\Providers;
 use App\User;
 use Illuminate\Auth\Access\AuthorizationException;
 use Illuminate\Auth\AuthenticationException;
+use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Gate;
 use Illuminate\Support\ServiceProvider;
@@ -33,18 +34,11 @@ class AuthServiceProvider extends ServiceProvider
         // should return either a User instance or null. You're free to obtain
         // the User instance via an API token or any other method necessary.
 
-        Auth::viaRequest('api', function ($request) {
-            $username = $request->input('username');
-            $password = $request->input('password');
-            if (defined('RUNNING_TESTS') && $username === 'valid') {
-                return new User([
-                    'username' => 'valid',
-                    'name' => 'Test User',
-                ]);
+        Auth::viaRequest('api', function (Request $request) {
+            $token = $request->header('token');
 
-            }
-            if ($request->input('api_token')) {
-                return User::where('api_token', $request->input('api_token'))->first();
+            if ($token) {
+                return User::getByToken($token);
             }
         });
     }

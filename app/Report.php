@@ -9,11 +9,13 @@ use Illuminate\Database\Eloquent\Model;
 use Illuminate\Contracts\Auth\Authenticatable as AuthenticatableContract;
 use Illuminate\Contracts\Auth\Access\Authorizable as AuthorizableContract;
 
-class User extends Model implements
+class Report extends Model implements
     AuthenticatableContract,
     AuthorizableContract
 {
     use Authenticatable, Authorizable;
+
+    protected $table = 'report';
 
     /**
      * The attributes that are mass assignable.
@@ -21,7 +23,7 @@ class User extends Model implements
      * @var array
      */
     protected $fillable = [
-        'username', 'name'
+        'date', 'username', 'yesterday', 'today', 'blockers'
     ];
 
     /**
@@ -31,13 +33,4 @@ class User extends Model implements
      */
     protected $hidden = [
     ];
-
-    public static function getByToken($token)
-    {
-        $result = DB::select('SELECT u.username, u.name FROM user u JOIN token t USING(username) WHERE t.token = ?',
-                        [$token]);
-        if (!empty($result)) {
-            return new self((array)$result[0]);
-        }
-    }
 }
