@@ -5,6 +5,10 @@ var ajaxLogin = function () {
   var loginCallback = function(data, status, jqXhr) {
     user = data;
     $('#loginModal').modal('hide');
+    $('#loginContainer').addClass('hidden');
+    $('#logoutContainer').removeClass('hidden');
+    $('#showReportModal').show();
+
   };
   var username = $('#inputUsername').val();
   var password = $('#inputPassword').val();

@@ -91,9 +91,13 @@
     <div class="header clearfix">
         <nav>
             <ul class="nav nav-pills pull-right">
-                <li><a class="btn btn-primary btn-success" href="#" role="button" data-toggle="modal" data-target="#loginModal">
-                    Sign In
-                </a></li>
+                <li id="loginContainer">
+                    <a class="btn btn-primary btn-success" href="#" role="button" data-toggle="modal" data-target="#loginModal">
+                        Sign In</a>
+                </li>
+                <li id="logoutContainer" class="hidden">
+                    <a class="btn btn-primary btn-success" href="#" role="button" id="logoutButton">Sign Out</a>
+                </li>
             </ul>
         </nav>
         <h3 class="text-muted">Product Delivery Status</h3>
@@ -113,8 +117,8 @@
         <tfoot>
             <tr>
                 <td colspan="4" class="text-right">
-                    <a class="btn btn-primary btn-success" style="padding: 10px 15px;" href="#" role="button"
-                       data-toggle="modal" data-target="#reportModal">Report</a>
+                    <a class="btn btn-primary btn-success collapse" style="padding: 10px 15px;" href="#" role="button"
+                       data-toggle="modal" data-target="#reportModal" id="showReportModal">Report</a>
                 </td>
             </tr>
         </tfoot>
