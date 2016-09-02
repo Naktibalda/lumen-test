@@ -37,7 +37,7 @@ class Authenticate
     {
 
         if ($this->auth->guard($guard)->guest()) {
-            return response()->json(['error' => 'incorrect username or password'], 401);
+            return response()->json(['error' => 'Access Denied'], 401);
         }
 
         return $next($request);
