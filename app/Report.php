@@ -33,7 +33,7 @@ class Report extends Model implements
     protected $hidden = [
     ];
 
-    public static function getReportForToday($username)
+    public static function getMyReportForToday($username)
     {
         $report = self::where('username', $username)->where('date', date('Y-m-d'))->first();
         if ($report) {

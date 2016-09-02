@@ -49,7 +49,7 @@ class ReportController extends Controller
     {
         $user = $request->user();
 
-        $result = Report::getReportForToday($user->username);
+        $result = Report::getMyReportForToday($user->username);
 
         return new JsonResponse($result);
     }
