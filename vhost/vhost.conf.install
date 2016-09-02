@@ -5,7 +5,21 @@
   ServerAdmin gintautas.miselis@eckoh.com
   DirectoryIndex index.html
 
-  
+  LogLevel debug
+
+  <Location />
+    RewriteEngine On
+
+    # Redirect Trailing Slashes If Not A Folder...
+    RewriteCond %{REQUEST_FILENAME} !-d
+    RewriteRule ^(.*)/$ /$1 [L,R=301]
+
+    # Handle Front Controller...
+    RewriteCond %{REQUEST_FILENAME} !-d
+    RewriteCond %{REQUEST_FILENAME} !-f
+    RewriteRule ^ index.php [L]
+  </Location>
+
   php_value       session.cookie_lifetime  "1440"
   php_admin_flag  session.cookie_secure    on
   php_admin_flag  suhosin.cookie.encrypt   on
