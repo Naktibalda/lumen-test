@@ -56,37 +56,6 @@ class LoginCest
         $I->seeRecord('token', ['token' => $token]);
     }
 
-    public function issuesNewTokenIfOldTokenIsPassedIn(FunctionalTester $I)
-    {
-        $I->sendPost('/login', [
-            'username' => 'valid',
-            'password' => 'valid',
-        ]);
-
-        $I->canSeeResponseCodeIs(HttpCode::OK);
-        $I->seeResponseMatchesJsonType([
-            'token' => 'string:!empty',
-        ]);
-
-        $token = $I->grabDataFromResponseByJsonPath('token')[0];
-
-        $I->seeRecord('token', ['token' => $token]);
-
-        //renew token
-        //$I->haveHttpHeader('token', $token);
-        $I->sendPost('/login', []);
-
-        $I->canSeeResponseCodeIs(HttpCode::OK);
-        $I->seeResponseMatchesJsonType([
-            'token' => 'string:!empty',
-        ]);
-
-        $newToken = $I->grabDataFromResponseByJsonPath('token')[0];
-
-        $I->seeRecord('token', ['token' => $newToken]);
-        $I->dontSeeRecord('token', ['token' => $token]);
-    }
-
     public function minimalExample(FunctionalTester $I)
     {
         $I->sendPost('/login', [
