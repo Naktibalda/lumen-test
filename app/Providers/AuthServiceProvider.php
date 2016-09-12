@@ -33,7 +33,7 @@ class AuthServiceProvider extends ServiceProvider
         // should return either a User instance or null. You're free to obtain
         // the User instance via an API token or any other method necessary.
 
-        Auth::viaRequest('api', function ($request) {
+        Auth::viaRequest('token', function ($request) {
             $username = $request->input('username');
             $password = $request->input('password');
             if (defined('RUNNING_TESTS') && $username === 'valid') {
